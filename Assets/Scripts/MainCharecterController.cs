@@ -13,6 +13,8 @@ public class MainCharecterController : MonoBehaviour
     [SerializeField]
     private float jumpSensetivity = 10f;
 
+    private const float k_SensetivityYRotation = 10f;
+
     private Vector3 lastMousePosition;
     private Vector3 startPos;
     private Quaternion startRot;
@@ -63,7 +65,8 @@ public class MainCharecterController : MonoBehaviour
 
         if (deltaPos.x != 0)
         {
-            transform.RotateAround(transform.up,deltaPos.x* rotationSensetivity);
+            transform.Rotate(transform.up, deltaPos.x * rotationSensetivity);
+            transform.Rotate(transform.right, deltaPos.y * rotationSensetivity * k_SensetivityYRotation);
         }
 
         if (Input.GetMouseButtonDown(1))
