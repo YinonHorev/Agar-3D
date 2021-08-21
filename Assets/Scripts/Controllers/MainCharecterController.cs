@@ -11,7 +11,9 @@ public class MainCharecterController : MonoBehaviour
     private float rotationSensetivity = 0.025f;
     [SerializeField]
     private float movmentSensetivity = 0.01f;
-
+    [SerializeField]
+    private GameObject m_GameOverImage;
+    
     private const float k_SensetivityYRotation = 10f;
 
     private Vector3 lastMousePosition;
@@ -100,7 +102,8 @@ public class MainCharecterController : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene("MainMenu");
+                m_GameOverImage.SetActive(true);
+                //SceneManager.LoadScene("MainMenu");
             }
         }
     }
