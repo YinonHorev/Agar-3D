@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9bacf5fc6f1ea4cd4b9057cf05510d91, type: 2}
+  - {fileID: 2100000, guid: 5a26de236ce89e94b963be8fa2b7ade6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -175,7 +175,6 @@ MonoBehaviour:
   m_SphereRig: {fileID: 7903306882117951156}
   rotationSensetivity: 0.05
   movmentSensetivity: 10
-  jumpSensetivity: 10
 --- !u!114 &3528264560307610720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,5 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e200d9c0a0144fd8845a362948a0065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_size:
-    m_BaseValue: 5
+  m_Size:
+    m_BaseValue: 0
+  m_Speed:
+    m_BaseValue: 0
