@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainCharecterController : MonoBehaviour
 {
@@ -10,21 +11,16 @@ public class MainCharecterController : MonoBehaviour
     private float rotationSensetivity = 0.025f;
     [SerializeField]
     private float movmentSensetivity = 0.01f;
-    [SerializeField]
-    private float jumpSensetivity = 10f;
 
     private const float k_SensetivityYRotation = 10f;
 
     private Vector3 lastMousePosition;
-    private Vector3 startPos;
-    private Quaternion startRot;
     
     // Start is called before the first frame update
     void Start()
     {
         lastMousePosition = Input.mousePosition;
-        startPos = transform.position;
-        startRot = transform.rotation;
+        gameObject.AddComponent<BlobStat>();
     }
 
     // Update is called once per frame
@@ -52,17 +48,6 @@ public class MainCharecterController : MonoBehaviour
             m_SphereRig.AddForce(movmentSensetivity * (transform.right));
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            m_SphereRig.AddForce(jumpSensetivity * (transform.up));
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            transform.position = startPos;
-            transform.rotation = startRot;
-        }
-
         if (deltaPos.x != 0)
         {
             transform.Rotate(transform.up, deltaPos.x * rotationSensetivity);
@@ -71,7 +56,7 @@ public class MainCharecterController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            Instantiate(m_TargetPrefab, new Vector3(Random.Range(-10f, 10f), 1.5f, Random.Range(-10f, 10f)), Quaternion.identity);
+            Instantiate(m_TargetPrefab, new Vector3(Random.Range(1f, 20f), Random.Range(1f, 20f), Random.Range(1f, 20f)), Quaternion.identity);
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -87,5 +72,36 @@ public class MainCharecterController : MonoBehaviour
             }
         }
         lastMousePosition = Input.mousePosition;
+
+        updateSize();
+    }
+
+    private void updateSize()
+    {
+        transform.localScale = Vector3.one * gameObject.GetComponent<BlobStat>().GetSize();
+    }
+
+    void OnCollisionEnter(Collision otherObj)
+    {
+        if (otherObj.gameObject.tag == "Coin")
+        {
+            Destroy(gameObject, .5f);
+            gameObject.GetComponent<BlobStat>().AddSize(0.1f);
+
+        }
+
+        if (otherObj.gameObject.tag == "Enemy")
+        {
+            float enemySize = otherObj.gameObject.transform.localScale.x;
+            bool ShouldIDie = gameObject.GetComponent<BlobStat>().TryToKill(enemySize); // it doesnt matter which axis we take it represents size
+            if (!ShouldIDie)
+            {
+                gameObject.GetComponent<BlobStat>().AddSize(enemySize);
+            }
+            else
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
+        }
     }
 }

@@ -7,24 +7,30 @@ public class Stat
 {
 
 	[SerializeField]
-	private int baseValue;  // Starting value
+	private float m_BaseValue;  // Starting value
 
 	// Get the final value after applying modifiers
-	public int GetValue()
+	public float GetValue()
 	{
-		return baseValue;
+		return m_BaseValue;
 	}
 
 	// Add new modifier
-	public void AddModifier(int i_Modifier)
+	public void AddModifier(float i_Modifier)
 	{
-		baseValue += i_Modifier;
+		m_BaseValue += i_Modifier;
 	}
 
 	// Remove a modifier
-	public void RemoveModifier(int i_Modifier)
+	public void SubtractModifier(float i_Modifier)
 	{
-		baseValue -= i_Modifier;
+		m_BaseValue -= i_Modifier;
+	}
+
+	// Divide a modifier
+	public void DivideModifier(float i_Modifier)
+	{
+		m_BaseValue /= i_Modifier;
 	}
 
 }
