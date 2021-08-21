@@ -9,11 +9,7 @@ public class Stat
 	[SerializeField]
 	private float m_BaseValue;  // Starting value
 
-	// Get the final value after applying modifiers
-	public float GetValue()
-	{
-		return m_BaseValue;
-	}
+    public float BaseValue { get => m_BaseValue;}
 
 	// Add new modifier
 	public void AddModifier(float i_Modifier)

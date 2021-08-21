@@ -1,104 +1,66 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class MainCharecterController : MonoBehaviour
 {
+    private Rigidbody m_Rigidbody;
+    private BlobStat m_BlobStat;
+
+    private float movementX;
+    private float movementY;
+
     [SerializeField]
-    private Transform m_TargetPrefab;
+    private GameObject m_Candy;
+
     [SerializeField]
-    private Rigidbody m_SphereRig;
-    [SerializeField]
-    private float rotationSensetivity = 0.025f;
-    [SerializeField]
-    private float movmentSensetivity = 0.01f;
+    private GameObject m_Enemy;
+
     [SerializeField]
     private GameObject m_GameOverImage;
-    
-    private const float k_SensetivityYRotation = 10f;
-
-    private Vector3 lastMousePosition;
     
     // Start is called before the first frame update
     void Start()
     {
-        lastMousePosition = Input.mousePosition;
         gameObject.AddComponent<BlobStat>();
+        m_BlobStat = gameObject.GetComponent<BlobStat>();
+        m_Rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 deltaPos = lastMousePosition - Input.mousePosition;
 
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-        {
-            m_SphereRig.AddForce( movmentSensetivity * (transform.forward));
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            m_SphereRig.AddForce(  - movmentSensetivity * (transform.forward));
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            m_SphereRig.AddForce( - movmentSensetivity * (transform.right));
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            m_SphereRig.AddForce(movmentSensetivity * (transform.right));
-        }
-
-        if (deltaPos.x != 0)
-        {
-            transform.Rotate(transform.up, deltaPos.x * rotationSensetivity);
-            transform.Rotate(transform.right, deltaPos.y * rotationSensetivity * k_SensetivityYRotation);
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            Instantiate(m_TargetPrefab, new Vector3(Random.Range(1f, 20f), Random.Range(1f, 20f), Random.Range(1f, 20f)), Quaternion.identity);
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.rigidbody != null && hit.rigidbody.GetComponent<enemy_hp>())
-                {
-                    hit.rigidbody.GetComponent<enemy_hp>().hitMe();
-                }
-            }
-        }
-        lastMousePosition = Input.mousePosition;
-
-        updateSize();
     }
 
     private void updateSize()
     {
-        transform.localScale = Vector3.one * gameObject.GetComponent<BlobStat>().GetSize();
+        transform.localScale = Vector3.one * m_BlobStat.Size;
+    }
+
+    private void OnMove(InputValue movementValue)
+    {
+        Vector2 movementVector = movementValue.Get<Vector2>();
+
+        movementX = movementVector.x;
+        movementY = movementVector.y;
     }
 
     void OnCollisionEnter(Collision otherObj)
     {
-        if (otherObj.gameObject.tag == "Coin")
+        if (otherObj.gameObject == m_Candy)
         {
             Destroy(gameObject, .5f);
-            gameObject.GetComponent<BlobStat>().AddSize(0.1f);
+            m_BlobStat.AddSize(10.1f);
 
         }
 
-        if (otherObj.gameObject.tag == "Enemy")
+        if (otherObj.gameObject == m_Enemy)
         {
             float enemySize = otherObj.gameObject.transform.localScale.x;
-            bool ShouldIDie = gameObject.GetComponent<BlobStat>().TryToKill(enemySize); // it doesnt matter which axis we take it represents size
+            bool ShouldIDie = m_BlobStat.TryToKill(enemySize); // it doesnt matter which axis we take it represents size
             if (!ShouldIDie)
             {
-                gameObject.GetComponent<BlobStat>().AddSize(enemySize);
+                m_BlobStat.AddSize(enemySize);
             }
             else
             {
@@ -106,5 +68,14 @@ public class MainCharecterController : MonoBehaviour
                 //SceneManager.LoadScene("MainMenu");
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+
+        m_Rigidbody.AddForce(movement * m_BlobStat.Speed);
+
+        updateSize();
     }
 }

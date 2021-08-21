@@ -9,7 +9,7 @@ public class NewEnemyScript : MonoBehaviour
 
     private int m_numOfCallsForUpdate = 0;
 
-    private const int k_SencePeriod = 10;
+    private const int k_SencePeriod = 200;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +21,8 @@ public class NewEnemyScript : MonoBehaviour
     {
         if (m_numOfCallsForUpdate == k_SencePeriod)
         {
-            Instantiate(m_Enemy, new Vector3(Random.Range(-50, 50), Random.Range(0, 50), Random.Range(-50, 50)), Quaternion.identity);
-            Instantiate(m_Candy, new Vector3(Random.Range(-50, 50), Random.Range(0, 50), Random.Range(-50, 50)), Quaternion.identity);
+            Instantiate(m_Enemy, new Vector3(Random.Range(-10, 10), 1.5f, Random.Range(-10, 10)), Quaternion.identity);
+            Instantiate(m_Candy, new Vector3(Random.Range(-10, 10), 1.5f, Random.Range(-10, 10)), Quaternion.identity);
             m_numOfCallsForUpdate = 0;
         }
         else

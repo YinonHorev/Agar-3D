@@ -3,7 +3,7 @@ using UnityEngine;
 public class BlobStat : MonoBehaviour
 {
 	[SerializeField]
-	private readonly float r_SlowDivider;
+	private readonly float r_SlowDivider = 1.1f;
 
 	[SerializeField]
 	private Stat m_Size;
@@ -11,15 +11,13 @@ public class BlobStat : MonoBehaviour
 	[SerializeField]
 	private Stat m_Speed;
 
-	public void AddSize(float i_Size)
+    public float Speed { get => m_Speed.BaseValue;}
+    public float Size { get => m_Size.BaseValue;}
+
+    public void AddSize(float i_Size)
     {
 		m_Size.AddModifier(i_Size);
 		m_Speed.DivideModifier(r_SlowDivider);
-	}
-
-	public float GetSize()
-	{
-		return m_Size.GetValue();
 	}
 
 	public void AddSpeed(float i_Size)
@@ -27,15 +25,10 @@ public class BlobStat : MonoBehaviour
 		m_Size.AddModifier(i_Size);
 	}
 
-	public float GetSpeed()
-	{
-		return m_Size.GetValue();
-	}
-
 	public bool TryToKill(float i_Damage)
 	{
         // If Blob has more damage reaches zero
-        if (m_Size.GetValue() - i_Damage <= 0)
+        if (Size - i_Damage <= 0)
 		{
 			return true;
 		}
@@ -43,9 +36,4 @@ public class BlobStat : MonoBehaviour
 		return false;
 	}
 
-	public virtual void Die()
-	{
-		// Die in some way
-		Debug.Log(transform.name + " died.");
-	}
 }

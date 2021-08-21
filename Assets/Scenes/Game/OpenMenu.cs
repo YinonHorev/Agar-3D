@@ -11,7 +11,7 @@ public class OpenMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_GameOverImage.Enabled(false);
+        m_GameOverImage.SetActive(false);
     }
 
     // Update is called once per frame
