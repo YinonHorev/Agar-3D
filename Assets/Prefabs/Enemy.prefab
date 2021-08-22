@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 7525651935244858814}
   - component: {fileID: 8519883020343108406}
   - component: {fileID: 1157843813864212137}
+  - component: {fileID: 821861826450683007}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5597009427921558077}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.93, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7663216493178655456}
@@ -83,9 +84,9 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 0.49
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!114 &1157843813864212137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +100,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 10
+--- !u!114 &821861826450683007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5597009427921558077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e200d9c0a0144fd8845a362948a0065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size:
+    m_BaseValue: 0.5
+  m_Speed:
+    m_BaseValue: 4
 --- !u!1 &9065209535227306966
 GameObject:
   m_ObjectHideFlags: 0

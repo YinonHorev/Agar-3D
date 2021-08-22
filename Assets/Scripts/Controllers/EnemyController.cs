@@ -3,18 +3,22 @@ using UnityEngine.AI;
 
 /* Makes enemies follow and attack the player */
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : CharecterController
 {
 
     public float lookRadius = 10f;
 
     Transform target;
     NavMeshAgent agent;
+    private float m_MainPlayerSize;
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         target = PlayerManager.instance.Player.transform; // We dont want to referance every enemy to the Player
         agent = GetComponent<NavMeshAgent>();
+        m_MainPlayerSize = PlayerManager.instance.Player.GetComponent<Transform>().localScale.x;
+        m_BlobStat.AddSize(m_MainPlayerSize + Random.Range(-m_MainPlayerSize, 2 * m_MainPlayerSize));
     }
 
     void Update()
@@ -32,6 +36,11 @@ public class EnemyController : MonoBehaviour
                 FaceTarget();
             }
         }
+    }
+
+    private new void FixedUpdate()
+    {
+        base.FixedUpdate();
     }
 
     // Point towards the player

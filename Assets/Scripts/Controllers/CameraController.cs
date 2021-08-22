@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -16,6 +14,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position + offset;
+        Vector3 p = new Vector3(0,1,-1) * PlayerManager.instance.Player.GetComponent<Transform>().localScale.y;
+        transform.position = player.transform.position + offset + p;
     }
 }
