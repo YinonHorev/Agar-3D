@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 1181900062}
   - component: {fileID: 3206540623910827596}
   m_Layer: 0
-  m_Name: Blob
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Size:
-    m_BaseValue: 0.1
+    m_BaseValue: 0.3
   m_Speed:
     m_BaseValue: 1
 --- !u!114 &1181900062
