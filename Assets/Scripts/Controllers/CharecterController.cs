@@ -47,13 +47,4 @@ public class CharecterController : MonoBehaviour
     {
         updateSize();
     }
-
-
-    //private void OnMove(InputValue movementValue)
-    //{
-    //    Vector2 movementVector = movementValue.Get<Vector2>();
-
-    //    movementX = movementVector.x;
-    //    movementY = movementVector.y;
-    //}
 }
