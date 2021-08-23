@@ -1,13 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharecterController : MonoBehaviour
 {
     protected Rigidbody m_Rigidbody;
     protected BlobStat m_BlobStat;
 
-    //[SerializeField]
-    //private GameObject m_GameOverImage;
-    
     // Start is called before the first frame update
     protected void Start()
     {
@@ -39,9 +37,8 @@ public class CharecterController : MonoBehaviour
             }
             else
             {
-                gameObject.SetActive(false);
                 //m_GameOverImage.SetActive(true);
-                //SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene("GameOver");
             }
         }
     }

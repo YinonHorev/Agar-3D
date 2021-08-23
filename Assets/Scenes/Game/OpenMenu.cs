@@ -20,7 +20,6 @@ public class OpenMenu : MonoBehaviour
 
     public void BackToMenu_OnCliked()
     {
-        m_GameOverImage.SetActive(false);
         SceneManager.LoadScene("Menu");
 
     }
