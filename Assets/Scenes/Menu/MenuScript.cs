@@ -13,12 +13,6 @@ public class MenuScript : MonoBehaviour
         m_HowToPlayImage.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Start_OnClick()
     {
         SceneManager.LoadScene("Game");

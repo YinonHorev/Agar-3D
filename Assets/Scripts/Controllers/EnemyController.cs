@@ -6,17 +6,17 @@ using UnityEngine.AI;
 public class EnemyController : CharecterController
 {
 
-    public float lookRadius = 10f;
+    public static float k_LookRadius = 10f;
 
-    Transform target;
-    NavMeshAgent agent;
+    Transform m_Target;
+    NavMeshAgent m_Agent;
     private float m_MainPlayerSize;
 
     new void Start()
     {
         base.Start();
-        target = PlayerManager.instance.Player.transform; // We dont want to referance every enemy to the Player
-        agent = GetComponent<NavMeshAgent>();
+        m_Target = PlayerManager.instance.Player.transform; // We dont want to referance every enemy to the Player
+        m_Agent = GetComponent<NavMeshAgent>();
         m_MainPlayerSize = PlayerManager.instance.Player.GetComponent<Transform>().localScale.x;
         m_BlobStat.AddSize(m_MainPlayerSize + Random.Range(-m_MainPlayerSize, 2 * m_MainPlayerSize));
     }
@@ -24,14 +24,14 @@ public class EnemyController : CharecterController
     void Update()
     {
         // Get the distance to the player
-        float distance = Vector3.Distance(target.position, transform.position);
+        float distance = Vector3.Distance(m_Target.position, transform.position);
 
         // If inside the radius
-        if (distance <= lookRadius)
+        if (distance <= k_LookRadius)
         {
             // Move towards the player
-            agent.SetDestination(target.position);
-            if (distance <= agent.stoppingDistance)
+            m_Agent.SetDestination(m_Target.position);
+            if (distance <= m_Agent.stoppingDistance)
             {
                 FaceTarget();
             }
@@ -46,7 +46,7 @@ public class EnemyController : CharecterController
     // Point towards the player
     void FaceTarget()
     {
-        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 direction = (m_Target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
@@ -54,7 +54,7 @@ public class EnemyController : CharecterController
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
+        Gizmos.DrawWireSphere(transform.position, k_LookRadius);
     }
 
 }
